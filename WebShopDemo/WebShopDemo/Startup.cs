@@ -11,10 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebShopApp.Data;
-using WebShopApp.Infrastructure;
+using WebShopDemo.Abstraction;
+using WebShopDemo.Data;
+using WebShopDemo.Domain;
+using WebShopDemo.Infrastructure;
+using WebShopDemo.Services;
 
-namespace WebShopApp
+namespace WebShopDemo
 {
     public class Startup
     {
@@ -28,16 +31,36 @@ namespace WebShopApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+          
+          
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            options.UseLazyLoadingProxies()
+            .UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-               .AddRoles<IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>()
-               .AddDefaultTokenProviders();
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddControllersWithViews();
+
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IBrandService, BrandService>();
+
+            services.AddRazorPages();
+            services.Configure<IdentityOptions>(option =>
+            {
+                option.Password.RequireDigit = false;
+                option.Password.RequiredLength = 5;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+                option.Password.RequireUppercase = false;
+                option.Password.RequiredUniqueChars = 0;
+
+            }
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
