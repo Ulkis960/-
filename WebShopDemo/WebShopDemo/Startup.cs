@@ -46,6 +46,8 @@ namespace WebShopDemo
 
             services.AddControllersWithViews();
 
+            services.AddTransient<IProductService, ProductService>();
+
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IBrandService, BrandService>();
 
