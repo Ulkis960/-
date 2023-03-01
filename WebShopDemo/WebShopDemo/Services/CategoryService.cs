@@ -16,27 +16,19 @@ namespace WebShopDemo.Services
         {
             _context = context;
         }
-        public List<Category> GetCategories(int categoryId)
-        {
-            List<Category> categories = _context.Categories.ToList();
-            return categories;
-            
-        }
-
-        public List<Category> GetCategories()
-        {
-            throw new NotImplementedException();
-        }
-
         public Category GetCategoryById(int categoryId)
         {
             return _context.Categories.Find(categoryId);
         }
-
+        public List<Category> GetCategories()
+        {
+            List<Category> categories = _context.Categories.ToList();
+            return categories;
+        }
         public List<Product> GetProductsByCategory(int categoryId)
         {
             return _context.Products
-                .Where(x => x.CategoryId ==categoryId)
+                .Where(x => x.CategoryId == categoryId)
                 .ToList();
         }
     }

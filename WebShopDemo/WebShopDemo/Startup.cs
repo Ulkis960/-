@@ -31,8 +31,8 @@ namespace WebShopDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
-          
+           
+
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseLazyLoadingProxies()
             .UseSqlServer(
@@ -43,14 +43,12 @@ namespace WebShopDemo
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            services.AddControllersWithViews();
-
+            
             services.AddTransient<IProductService, ProductService>();
-
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IBrandService, BrandService>();
 
+            services.AddControllersWithViews();
             services.AddRazorPages();
             services.Configure<IdentityOptions>(option =>
             {

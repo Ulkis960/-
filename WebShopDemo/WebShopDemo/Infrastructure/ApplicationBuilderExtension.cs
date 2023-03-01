@@ -15,7 +15,6 @@ namespace WebShopDemo.Infrastructure
         public static async Task<IApplicationBuilder> PrepareDatabase(this IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
-
             var services = serviceScope.ServiceProvider;
 
             await RoleSeeder(services);
@@ -26,34 +25,29 @@ namespace WebShopDemo.Infrastructure
 
             var dataBrand = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             SeedBrands(dataBrand);
-
             return app;
         }
 
-        private static async Task RoleSeeder(IServiceProvider serviceProvider)
+        public static async Task RoleSeeder(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
             string[] roleNames = { "Administrator", "Client" };
 
             IdentityResult roleResult;
-
-            foreach (var role in roleNames)
+            foreach(var role in roleNames)
             {
                 var roleExist = await roleManager.RoleExistsAsync(role);
-
-                if (!roleExist)
+                if(!roleExist)
                 {
                     roleResult = await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
         }
 
-        private static async Task SeedAdministrator(IServiceProvider serviceProvider)
+        public static async Task SeedAdministrator(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-            if (await userManager.FindByNameAsync("admin") == null)
+            if(await userManager.FindByNameAsync("admin") == null)
             {
                 ApplicationUser user = new ApplicationUser();
                 user.FirstName = "admin";
@@ -62,54 +56,53 @@ namespace WebShopDemo.Infrastructure
                 user.UserName = "admin";
                 user.Email = "admin@admin.com";
 
-                var result = await userManager.CreateAsync
-                (user, "Admin123456");
-
+                var result = await userManager.CreateAsync(user, "admin123");
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, "Administrator").Wait();
                 }
             }
         }
-        private static void SeedCategories(ApplicationDbContext dataCategory)
+
+        public static void SeedCategories(ApplicationDbContext dataCategory)
         {
             if (dataCategory.Categories.Any())
             {
                 return;
             }
+
             dataCategory.Categories.AddRange(new[]
             {
-                new Category {CategoryName="Laptop"},
-                new Category {CategoryName="Computer"},
-                new Category {CategoryName="Monitor"},
-                new Category {CategoryName="Accessory"},
-                new Category {CategoryName="TV"},
-                new Category {CategoryName="Mobile phone"},
-                new Category {CategoryName="Smart watch"},
+                new Category{CategoryName="Laptop"},
+                new Category{CategoryName="Computer"},
+                new Category{CategoryName="Monitor"},
+                new Category{CategoryName="Accessory"},
+                new Category{CategoryName="TV"},
+                new Category{CategoryName="Moblie phone"},
+                new Category{CategoryName="Smart watch"},
             });
             dataCategory.SaveChanges();
         }
 
-        private static void SeedBrands(ApplicationDbContext dataBrand)
+        public static void SeedBrands(ApplicationDbContext dataBrand)
         {
             if (dataBrand.Brands.Any())
             {
                 return;
             }
+
             dataBrand.Brands.AddRange(new[]
             {
-                new Brand {BrandName="Acer"},
-                new Brand {BrandName="Asus"},
-                new Brand {BrandName="Apple"},
-                new Brand {BrandName="Dell"},
-                new Brand {BrandName="Hp"},
-                new Brand {BrandName="Huawei"},
-                new Brand {BrandName="Lenovo"},
-                new Brand {BrandName="Samsung"},
-
+                new Brand{BrandName="Acer"},
+                new Brand{BrandName="Asus"},
+                new Brand{BrandName="Apple"},
+                new Brand{BrandName="Dell"},
+                new Brand{BrandName="HP"},
+                new Brand{BrandName="Huawei"},
+                new Brand{BrandName="Lenovo"},
+                new Brand{BrandName="Samsung"},
             });
             dataBrand.SaveChanges();
         }
-
     }
 }

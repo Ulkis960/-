@@ -9,7 +9,7 @@ namespace WebShopDemo.Abstraction
     public interface IBrandService
     {
         List<Brand> GetBrands();
-        Brand GetBrandById(int brandId);
-        List<Product> GetProductsByBrand(int brandId);
+        Brand GetBrandById(int categoryId);
+        List<Product> GetProductsByBrand(int categoryId);
     }
 }
