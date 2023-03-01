@@ -23,5 +23,6 @@ namespace WebShopDemo.Data
         public DbSet<WebShopDemo.Models.Product.ProductIndexVM> ProductIndexVM { get; set; }
         public DbSet<WebShopDemo.Models.Product.ProductEditVM> ProductEditVM { get; set; }
         public DbSet<WebShopDemo.Models.Product.ProductDetailsVM> ProductDetailsVM { get; set; }
+        public DbSet<WebShopDemo.Models.Product.ProductDeleteVM> ProductDeleteVM { get; set; }
     }
 }

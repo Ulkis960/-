@@ -56,7 +56,7 @@ namespace WebShopDemo.Infrastructure
                 user.UserName = "admin";
                 user.Email = "admin@admin.com";
 
-                var result = await userManager.CreateAsync(user, "admin123");
+                var result = await userManager.CreateAsync(user, "Admin123");
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, "Administrator").Wait();

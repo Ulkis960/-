@@ -177,7 +177,7 @@ namespace WebShopDemo.Controllers
                 Price=product.Price,
                 Discount=product.Discount
             };
-            return View(product);
+            return View(productDelete);
         }
 
         [HttpPost]
