@@ -8,6 +8,7 @@ namespace WebShopDemo.Models.Order
     public class OrderIndexVM
     {
         public int Id { get; set; }
+        public string OrderDate { get; set; }
         public string UserId { get; set; }
         public string User { get; set; }
         public int ProductId { get; set; }
