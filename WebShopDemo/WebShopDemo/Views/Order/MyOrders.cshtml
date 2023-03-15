@@ -1,0 +1,17 @@
+﻿@model IEnumerable<WebShopDemo.Models.Order.OrderIndexVM>
+
+@{
+    ViewData["Title"] = "MyOrders";
+}
+<h1>MyOrders</h1>
+
+<p>
+    <a asp-controller="ProductName" asp-action="Index">Back to products</a>
+</p>
+<form asp-controller="Order" asp-action="MyOrders" method="get">
+    <p>
+        product name: <input type="text" name="searchString"/>
+        <input type="submit" value="Filter"/>
+    </p>
+</form>
+<table class="table">
